@@ -21,16 +21,19 @@ Helper h;
 
 static void usage(){
     cout << "Usage:\n" <<
-    "    ./Trabalho CE [options] -i $input/file/path$ -o $output/folder/path$ CrossoverMethods\n\n" <<
+    "    ./Trabalho CE [options] -i $input/file/path$ -o $output/folder/path$ -c CrossoverMethods -m MutationMethods\n\n" <<
     "Options:\n" <<
     "    -h     Show this help\n" <<
     "    -p     Population size\n" <<
     "    -g     Number of generations\n" <<
-    "    -m     Mutation frequency\n" <<
-    "Crossover method:\n" <<
+    "    -f     Mutation frequency\n" <<
+    "Crossover methods:\n" <<
     "    1      Combine solved squares\n" <<
     "    2      Combine solved rows\n" <<
     "    3      Combine solved columns\n" <<
+    "    all    All methods\n"
+    "Mutation methods:\n" <<
+    "    1      Shuffle random square\n" <<
     "    all    All methods\n";
 }
 
@@ -43,10 +46,9 @@ int processArgs(int argc, const char * argv[]){
     int argInd;
     
     for(argInd = 1; argInd < argc; ++argInd) {
-        if (argv[argInd][0] != '-')
+        if (!strcmp(argv[argInd], "-c") || !strcmp(argv[argInd], "-m"))
             break;
-        
-        if (!strcmp(argv[argInd], "-h")) {
+        else if (!strcmp(argv[argInd], "-h")) {
             usage();
             return 2;
         } else if (!strcmp(argv[argInd], "-i"))
@@ -57,17 +59,31 @@ int processArgs(int argc, const char * argv[]){
             populationSize = atoi(argv[++argInd]);
         else if (!strcmp(argv[argInd], "-g"))
             generations = atoi(argv[++argInd]);
-        else if (!strcmp(argv[argInd], "-m"))
+        else if (!strcmp(argv[argInd], "-f"))
             generations = atof(argv[++argInd]);
     }
     
-    if(!strcmp (argv[argInd], "all")) {
-        crossoverMethods.push_back(1);
-        crossoverMethods.push_back(2);
-        crossoverMethods.push_back(3);
-    } else
-        for(argInd = argInd; argInd < argc; ++argInd)
-            crossoverMethods.push_back(atoi(argv[argInd]));
+    if(!strcmp(argv[argInd], "-c")){
+        ++argInd;
+        if(!strcmp (argv[argInd], "all")) {
+            crossoverMethods.push_back(1);
+            crossoverMethods.push_back(2);
+            crossoverMethods.push_back(3);
+        } else
+            for(argInd = argInd; argInd < argc; ++argInd)
+                crossoverMethods.push_back(atoi(argv[argInd]));
+    }
+    
+    if(!strcmp(argv[argInd], "-m")){
+        ++argInd;
+        if(!strcmp (argv[argInd], "all")) {
+            mutationMethods.push_back(1);
+            mutationMethods.push_back(2);
+            mutationMethods.push_back(3);
+        } else
+            for(argInd = argInd; argInd < argc; ++argInd)
+                mutationMethods.push_back(atoi(argv[argInd]));
+    }
     
     if(mutationFrequency > 1)
         mutationFrequency /= 100;

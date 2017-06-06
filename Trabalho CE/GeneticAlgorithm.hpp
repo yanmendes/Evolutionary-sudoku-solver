@@ -57,7 +57,7 @@ private:
     
         //Shuffles a random square
         void shuffleRandomSquare(Individual*);
-        string shuffleRandoSquaresName(void) {return "Shuffle random squares";};
+        string shuffleRandoSquaresName(void) {return "Shuffle random square";};
 public:
     //Constructor
     GeneticAlgorithm(int, int, int, int, double);
