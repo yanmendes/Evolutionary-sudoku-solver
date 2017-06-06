@@ -18,6 +18,7 @@ using namespace std;
 class GeneticAlgorithm{
 private:
     //Defining new data types
+    typedef Individual * (GeneticAlgorithm::*crossoverMethod)(Individual*, Individual*);
     typedef void (GeneticAlgorithm::*mutationMethod)(Individual*);
     typedef string (GeneticAlgorithm::*getMethodName)(void);
     
@@ -28,16 +29,25 @@ private:
     static Helper h;
     vector<double> averageFitness;
     
+    //Population operations
+    static bool compFunction(Individual * a, Individual * b) {return a->getFitness() > b->getFitness();};
+    void sortPopulation(void) {sort(this->population.begin(), this->population.end(), this->compFunction);};
+    vector<pair<Individual*, Individual*>> getParents();
+    
+    //Domain dependable methods
+    void generatePopulation(void) {};
+    
     //Crossover method(s)
-        Individual * crossover(Individual*, Individual*);
-        getMethodName getCurrentCrossoverMethodName;
+    crossoverMethod currentCrossoverMethod;
+    getMethodName getCurrentCrossoverMethodName;
+    Individual * crossover(Individual*, Individual*);
     
         //Combine solved squares
         string combineSquaresName(void) {return "Combine solved squares";};
     
         //Combine solved rows
         string combineRowsName(void) {return "Combine solved rows";};
-    
+
         //Combine solved columns
         string combineColumnsName(void) {return "Combine solved columns";};
     
@@ -48,19 +58,18 @@ private:
         //Shuffles a random square
         void shuffleRandomSquare(Individual*);
         string shuffleRandoSquaresName(void) {return "Shuffle random squares";};
-    
-    //Population operations
-    void generatePopulation(void) {};
-    static bool compFunction(Individual * a, Individual * b) {return a->getFitness() > b->getFitness();};
-    void sortPopulation(void) {sort(this->population.begin(), this->population.end(), this->compFunction);};
-    vector<pair<Individual*, Individual*>> getParents();
 public:
-    GeneticAlgorithm(int, int, int, double);
+    //Constructor
+    GeneticAlgorithm(int, int, int, int, double);
+    
+    //Solver
     void solve(void);
-    void clearPopulation(void);
+    
+    //Domain dependable methods
     void generatePopulation(Individual*);
     
     //Auxiliary methods
+    void clearPopulation(void);
     Individual * getFittest(void) {this->sortPopulation(); return this->population.at(0);};
     bool foundSolution();
     
@@ -72,6 +81,9 @@ public:
     double getMutationFrequency() {return this->mutationFrequency;};
     int getGenerationsPassed() {return this->generationsPassed;};
     vector<double> getAverageFitness() {return this->averageFitness;};
+    
+    //Destructor
+    ~GeneticAlgorithm(){this->population.clear(); this->averageFitness.clear();};
 };
 
 #endif /* GeneticAlgorithm_hpp */

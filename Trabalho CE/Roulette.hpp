@@ -24,6 +24,7 @@ public:
     pair<Individual*, Individual*> spin();
     vector<pair<Individual*, Individual*>> stochasticUniversalSampling();
     unsigned int getTotalFitness() {return this->totalFitness;};
+    ~Roulette(){this->population.clear();};
 };
 
 #endif /* Roulette_hpp */

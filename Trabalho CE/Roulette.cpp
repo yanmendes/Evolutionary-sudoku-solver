@@ -37,18 +37,16 @@ pair<Individual*, Individual*> Roulette::spin(){
 }
 
 vector<pair<Individual*, Individual*>> Roulette::stochasticUniversalSampling(){
-    double distanceBetweenPointers = (double) this->totalFitness / this->population.size();
-    double currentSum = h.generateRandomNumber(0, floor(distanceBetweenPointers)); //Offset
+    double distanceBetweenPointers = (double) this->totalFitness / this->population.size(),
+           currentSum = h.generateRandomNumber(0, floor(distanceBetweenPointers)); //Offset
     int i = 0;
     unsigned int populationSum = this->population.at(0)->getFitness();
     vector<Individual*> selectedIndividuals;
     vector<pair<Individual*, Individual*>> parents;
     
-    while(currentSum <= this->totalFitness){
-        while(populationSum < currentSum){
-            ++i;
-            populationSum += population.at(i)->getFitness();
-        }
+    while(currentSum <= this->totalFitness && selectedIndividuals.size() < this->population.size()){
+        while(populationSum < currentSum)
+            populationSum += population.at(i++)->getFitness();
         
         selectedIndividuals.push_back(population.at(i));
         currentSum += distanceBetweenPointers;

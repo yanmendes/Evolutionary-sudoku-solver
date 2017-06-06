@@ -16,7 +16,7 @@ double mutationFrequency = 0.2;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
     outputFolder = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/Output/";
-vector<int> methods;
+vector<int> crossoverMethods, mutationMethods (1, 1);
 Helper h;
 
 static void usage(){
@@ -62,12 +62,15 @@ int processArgs(int argc, const char * argv[]){
     }
     
     if(!strcmp (argv[argInd], "all")) {
-        methods.push_back(1);
-        methods.push_back(2);
-        methods.push_back(3);
+        crossoverMethods.push_back(1);
+        crossoverMethods.push_back(2);
+        crossoverMethods.push_back(3);
     } else
         for(argInd = argInd; argInd < argc; ++argInd)
-            methods.push_back(atoi(argv[argInd]));
+            crossoverMethods.push_back(atoi(argv[argInd]));
+    
+    if(mutationFrequency > 1)
+        mutationFrequency /= 100;
     
     return 0;
 }
@@ -78,9 +81,9 @@ int main(int argc, const char * argv[]) {
     srand((unsigned int) time(0));
     
     if(dev){
-        methods.push_back(1);
-        methods.push_back(2);
-        methods.push_back(3);
+        crossoverMethods.push_back(1);
+        crossoverMethods.push_back(2);
+        crossoverMethods.push_back(3);
     }else if((errors = processArgs(argc, argv)))
         return errors;
     
@@ -94,26 +97,30 @@ int main(int argc, const char * argv[]) {
     vector<Individual*> boards = (new Reader())->parseSudokus(inputFile);
     cout << "- - - - - - Done processing the input - - - - - - " << endl << endl;
     
-    for(int method : methods){
-        GeneticAlgorithm * g = new GeneticAlgorithm(method, populationSize, generations, mutationFrequency);
-        cout << "- - - - - - Selected Method: " << g->getCrossoverMethod() << " - - - - - - " << endl;
+    for(int crossoverMethod : crossoverMethods){
+        for(int mutationMethod : mutationMethods){
+            GeneticAlgorithm * g = new GeneticAlgorithm(crossoverMethod, mutationMethod, populationSize, generations, mutationFrequency);
+            cout << "- - - - - - Selected Method: " << g->getCrossoverMethod() << " - - - - - - " << endl;
         
-        for(Individual * i : boards){
-            Writer * w = new Writer(i, g);
+            for(Individual * i : boards){
+                Writer * w = new Writer(i, g);
             
-            cout << "- - - - - - Generating population - - - - - - " << endl;
-            g->generatePopulation(i);
-            cout << "- - - - - - Done generating population - - - - - - " << endl;
+                cout << "- - - - - - Generating population - - - - - - " << endl;
+                g->generatePopulation(i);
+                cout << "- - - - - - Done generating population - - - - - - " << endl;
             
-            cout << "- - - - - - Starting to solve - - - - - - " << endl;
-            clock_t beforeSolve = clock();
-            g->solve();
-            clock_t afterSolve  = clock();
-            cout << "- - - - - - Finished solving - - - - - - " << endl << endl;
+                cout << "- - - - - - Starting to solve - - - - - - " << endl;
+                clock_t beforeSolve = clock();
+                g->solve();
+                clock_t afterSolve  = clock();
+                cout << "- - - - - - Finished solving - - - - - - " << endl << endl;
             
-            w->writeResults(afterSolve - beforeSolve);
+                w->writeResults(afterSolve - beforeSolve);
             
-            g->clearPopulation();
+                g->clearPopulation();
+            }
+            
+            delete g;
         }
     }
     

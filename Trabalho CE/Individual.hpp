@@ -13,9 +13,8 @@
 
 class Individual{
 private:
-    int fitness;
-    int limit;
-    int * sudokuBoard;
+    //Attributes
+    int fitness, limit, *sudokuBoard;
     vector<int> fixedPositions;
     static Helper h;
 public:
@@ -26,18 +25,18 @@ public:
     static currentGetterMethod currentGetter;
     static currentSetterMethod currentSetter;
     
+    //Constructors
     Individual(int, int*);
     Individual(Individual*);
     
-    int getFitness();
+    //Auxiliary methods
     Individual * fillWithRandom(void);
     
-    ~Individual() {delete [] this->sudokuBoard; fixedPositions.clear();};
-    
     //Getters
-    int getLimit() {return this->limit;};
-    int * getSudokuBoard() {return this->sudokuBoard;};
-    vector<int> getFixedPositions() {return this->fixedPositions;};
+    int getFitness(void);
+    int getLimit(void) {return this->limit;};
+    int * getSudokuBoard(void) {return this->sudokuBoard;};
+    vector<int> getFixedPositions(void) {return this->fixedPositions;};
     
         //Element getters
         vector<int> getSquare(int);
@@ -48,6 +47,9 @@ public:
     Individual * setSquare(int, int*);
     Individual * setRow(int, int*);
     Individual * setColumn(int, int*);
+    
+    //Destructor
+    ~Individual(void) {delete [] this->sudokuBoard; fixedPositions.clear();};
 };
 
 #endif /* Individual_hpp */

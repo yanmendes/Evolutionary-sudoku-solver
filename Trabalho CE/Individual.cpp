@@ -25,7 +25,7 @@ Individual::Individual(Individual * templateIndividual){
     this->sudokuBoard = new int[this->limit * this->limit];
     this->fitness = -1;
     
-    for(int i : templateIndividual->getFixedPositions())
+    for(int i : templateIndividual->fixedPositions)
         this->fixedPositions.push_back(i);
     
     for(int i = 0; i < this->limit * this->limit; ++i)
@@ -33,15 +33,8 @@ Individual::Individual(Individual * templateIndividual){
 }
 
 Individual * Individual::fillWithRandom(){
-    vector<int> square;
-    int * randomSequence = nullptr;
-    
-    for(int i = 0; i < this->limit; ++i){
-        //Generates a random sequence
-        randomSequence = h.generateRandomSequence(this->limit);
-        
-        (this->*currentSetter)(i, randomSequence);
-    }
+    for(int i = 0; i < this->limit; ++i)
+        (this->*currentSetter)(i, h.generateRandomSequence(this->limit));
     
     return this;
 }
@@ -113,6 +106,7 @@ Individual * Individual::setRow(int rowNumber, int * values){
 }
 
 Individual * Individual::setColumn(int colNumber, int * values){
+    //Corrects the column with the fixed values from the board
     for(int j = 0; j < this->limit; ++j){
         int matrixPosition = j * this->limit + colNumber;
         
