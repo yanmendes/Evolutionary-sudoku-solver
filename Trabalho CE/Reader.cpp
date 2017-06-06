@@ -8,29 +8,17 @@
 
 #include "Reader.hpp"
 
-vector<Individual*> Reader::parseSudokus(string file){
-    vector<Individual*> boards;
+vector<Individual*> Reader::parseInput(string file){
+    vector<Individual*> individuals;
     
     fstream inputFile;
     inputFile.open(file);
     
     string line;
-    int instances, limit;
-    
-    inputFile >> instances >> limit;
-    
-    for(int k = 0; k < instances; ++k){
-        int * sudokuBoard = new int[limit * limit];
-        for(int i = 0; i < limit; ++i)
-            for(int j = 0; j < limit; ++j)
-                inputFile >> sudokuBoard[i * limit + j];
-        
-        boards.push_back(new Individual(limit, sudokuBoard));
-    }
-    
+
     inputFile.close();
     
     cout << "- - - - - - Done parsing input file " << file << " - - - - - - " << endl;
     
-    return boards;
+    return individuals;
 }

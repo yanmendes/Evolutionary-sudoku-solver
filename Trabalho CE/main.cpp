@@ -94,7 +94,7 @@ int main(int argc, const char * argv[]) {
     Helper::generateExecutionId();
     
     cout << "- - - - - - Processing the input - - - - - - " << endl;
-    vector<Individual*> boards = (new Reader())->parseSudokus(inputFile);
+    vector<Individual*> boards = (new Reader())->parseInput(inputFile);
     cout << "- - - - - - Done processing the input - - - - - - " << endl << endl;
     
     for(int crossoverMethod : crossoverMethods){

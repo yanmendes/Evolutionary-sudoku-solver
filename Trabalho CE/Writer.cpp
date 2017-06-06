@@ -11,8 +11,8 @@
 static vector<Result*> results;
 
 Writer::Writer(Individual * i, GeneticAlgorithm * g){
-    this->outputFile =
-        h.createOutputFileName(g->getCrossoverMethod(), g->getMutationMethod(), i->getSudokuBoard(), i->getLimit());
+//    this->outputFile =
+//        h.createOutputFileName(g->getCrossoverMethod(), g->getMutationMethod(), i->getSudokuBoard(), i->getLimit());
     this->g = g;
 }
 
@@ -32,7 +32,7 @@ void Writer::writeResults(double elapsedTime){
     file << "########TEST RESULTS########" << endl;
     file << "Elapsed time: " << elapsedTime << " ms" << endl;
     file << "Fittest individual fitness: " << g->getFittest()->getFitness() << endl;
-    file << "Fittest individual: \n" << h.getMatrix(g->getFittest()->getSudokuBoard(), g->getFittest()->getLimit()) << endl;
+//    file << "Fittest individual: \n" << h.getMatrix(g->getFittest()->getSudokuBoard(), g->getFittest()->getLimit()) << endl;
     
     file.close();
     

@@ -40,24 +40,10 @@ private:
     //Crossover method(s)
     crossoverMethod currentCrossoverMethod;
     getMethodName getCurrentCrossoverMethodName;
-    Individual * crossover(Individual*, Individual*);
-    
-        //Combine solved squares
-        string combineSquaresName(void) {return "Combine solved squares";};
-    
-        //Combine solved rows
-        string combineRowsName(void) {return "Combine solved rows";};
-
-        //Combine solved columns
-        string combineColumnsName(void) {return "Combine solved columns";};
     
     //Mutation method(s)
     mutationMethod currentMutationMethod;
     getMethodName getCurrentMutationMethodName;
-    
-        //Shuffles a random square
-        void shuffleRandomSquare(Individual*);
-        string shuffleRandoSquaresName(void) {return "Shuffle random squares";};
 public:
     //Constructor
     GeneticAlgorithm(int, int, int, int, double);

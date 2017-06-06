@@ -78,22 +78,8 @@ GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int 
     
     switch (crossoverMethod) {
         case 1:
-            this->currentCrossoverMethod = &GeneticAlgorithm::crossover;
-            Individual::currentGetter = &Individual::getSquare;
-            Individual::currentSetter = &Individual::setSquare;
-            this->getCurrentCrossoverMethodName = &GeneticAlgorithm::combineSquaresName;
-            break;
-        case 2:
-            this->currentCrossoverMethod = &GeneticAlgorithm::crossover;
-            Individual::currentGetter = &Individual::getRow;
-            Individual::currentSetter = &Individual::setRow;
-            this->getCurrentCrossoverMethodName = &GeneticAlgorithm::combineRowsName;
-            break;
-        case 3:
-            this->currentCrossoverMethod = &GeneticAlgorithm::crossover;
-            Individual::currentGetter = &Individual::getColumn;
-            Individual::currentSetter = &Individual::setColumn;
-            this->getCurrentCrossoverMethodName = &GeneticAlgorithm::combineColumnsName;
+//            this->currentCrossoverMethod = &GeneticAlgorithm::crossoverMethod1;
+//            this->getCurrentCrossoverMethodName = &GeneticAlgorithm::crossoverMethod1Name;
             break;
         default:
             cout << "Invalid input crossover method" << endl;
@@ -102,8 +88,8 @@ GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int 
     
     switch (mutationMethod) {
         case 1:
-            this->currentMutationMethod = &GeneticAlgorithm::shuffleRandomSquare;
-            this->getCurrentMutationMethodName = &GeneticAlgorithm::shuffleRandoSquaresName;
+//            this->currentMutationMethod = &GeneticAlgorithm::mutationMethod1;
+//            this->getCurrentMutationMethodName = &GeneticAlgorithm::mutationMethod1Name;
             break;
         default:
             cout << "Invalid input mutation method" << endl;
@@ -121,8 +107,9 @@ GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int 
  */
 bool GeneticAlgorithm::foundSolution(void){
     Individual * fittest = this->getFittest();
-    
-    return fittest->getFitness() == (fittest->getLimit() * fittest->getLimit());
+
+    return true;
+//    return isSolution(fittest);
 }
 
 /*
@@ -137,24 +124,5 @@ void GeneticAlgorithm::generatePopulation(Individual * templateIndividual){
 
 /*************CROSSOVER METHODS*************/
 
-Individual * GeneticAlgorithm::crossover(Individual * p1, Individual * p2){
-    Individual * ind = new Individual(p1);
-    
-    for(int i = 0; i < p2->getLimit(); ++i){
-        if(i % 2)
-            continue;
-        else
-            (ind->*Individual::currentSetter)(i, h.toArray((p2->*Individual::currentGetter)(i)));
-    }
-        
-    return ind;
-}
-
 /*************MUTATION METHODS*************/
 
-void GeneticAlgorithm::shuffleRandomSquare(Individual * i){
-    long int seed = SEED;
-    mt19937 mt_rand((unsigned int) seed);
-    
-    (i->*Individual::currentSetter)(mt_rand() % i->getLimit(), h.generateRandomSequence(i->getLimit()));
-}

@@ -16,7 +16,7 @@ using namespace std;
 
 class Reader{
 public:
-    vector<Individual*> parseSudokus(string);
+    vector<Individual*> parseInput(string);
 };
 
 #endif /* Reader_hpp */
