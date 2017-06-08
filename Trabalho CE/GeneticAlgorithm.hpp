@@ -25,14 +25,16 @@ private:
     //Attributes
     vector<Individual*> population;
     int generations, generationsPassed;
-    double mutationFrequency;
+    double mutationFrequency, preservedPopulationPercentage;
     static Helper h;
     vector<double> averageFitness;
     
     //Population operations
     static bool compFunction(Individual * a, Individual * b) {return a->getFitness() > b->getFitness();};
+    static bool reverseCompFunction(Individual * a, Individual * b) {return a->getFitness() < b->getFitness();};
     void sortPopulation(void) {sort(this->population.begin(), this->population.end(), this->compFunction);};
-    vector<pair<Individual*, Individual*>> getParents();
+    vector<pair<Individual*, Individual*>> selectParents();
+    void mergePopulation(vector<Individual*>);
     
     //Domain dependable methods
     void generatePopulation(void) {};
@@ -60,7 +62,7 @@ private:
         string shuffleRandoSquaresName(void) {return "Shuffle random square";};
 public:
     //Constructor
-    GeneticAlgorithm(int, int, int, int, double);
+    GeneticAlgorithm(int, int, int, int, double, double);
     
     //Solver
     void solve(void);
@@ -79,6 +81,7 @@ public:
     int getPopulationSize() {return (int) this->population.size();};
     int getGenerations() {return this->generations;};
     double getMutationFrequency() {return this->mutationFrequency;};
+    double getPreservedPopulationPercentage() {return this->preservedPopulationPercentage;};
     int getGenerationsPassed() {return this->generationsPassed;};
     vector<double> getAverageFitness() {return this->averageFitness;};
     

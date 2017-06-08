@@ -17,7 +17,7 @@ using namespace std;
 class Parameters{
 public:
     static int GENERATIONS, POPULATION_SIZE;
-    static double MUTATION_FREQUENCY;
+    static double MUTATION_FREQUENCY, PRESERVED_POPULATION_PERCENTAGE;
     static string OUTPUT_FOLDER;
 };
 

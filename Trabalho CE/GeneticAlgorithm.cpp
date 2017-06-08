@@ -22,7 +22,7 @@ void GeneticAlgorithm::clearPopulation(void){
     this->population.resize(populationSize);
 }
 
-vector<pair<Individual*, Individual*>> GeneticAlgorithm::getParents(void){
+vector<pair<Individual*, Individual*>> GeneticAlgorithm::selectParents(void){
     Roulette * roulette = new Roulette(this->population);
     
     vector<pair<Individual*, Individual*>> parents = roulette->stochasticUniversalSampling();
@@ -34,6 +34,28 @@ vector<pair<Individual*, Individual*>> GeneticAlgorithm::getParents(void){
     return parents;
 }
 
+void GeneticAlgorithm::mergePopulation(vector<Individual *> children){
+    sort(children.begin(), children.end(), this->reverseCompFunction);
+        
+    int iterations = (1 - this->preservedPopulationPercentage) * this->population.size();
+    for(int i = 0; i < iterations; ++i){
+        Individual * ind = this->population.back();
+        delete ind;
+        this->population.pop_back();
+    }
+        
+    for(int i = 0; i < iterations; ++i){
+        this->population.push_back(children.back());
+        children.pop_back();
+    }
+        
+    for(Individual * i : children)
+        delete i;
+        
+    children.clear();
+    children.shrink_to_fit();
+}
+
 void GeneticAlgorithm::solve(void){
     vector<pair<Individual*, Individual*>> parentsVector;
     vector<Individual*> children;
@@ -43,18 +65,20 @@ void GeneticAlgorithm::solve(void){
         if(this->foundSolution())
             break;
         
-        parentsVector = this->getParents();
+        //Selection
+        parentsVector = this->selectParents();
         
+        //Recombination
         for(auto const parents : parentsVector)
             children.push_back((this->*currentCrossoverMethod)(parents.first, parents.second));
     
+        //Mutation
         for(Individual * i : children)
             if(h.generateRandomNumber(0, 100) < this->mutationFrequency * 100)
                 (this->*currentMutationMethod)(i);
         
-        this->clearPopulation();
-        
-        this->population = children;
+        //Generate new population
+        this->mergePopulation(children);
         
         children.clear();
     }
@@ -85,9 +109,10 @@ GeneticAlgorithm::~GeneticAlgorithm(void){
  * @param mutationFrequency int Mutation frequency
  */
 GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int populationSize, int generations,
-                                   double mutationFrequency){
+                                   double mutationFrequency, double preservedPopulationPercentage){
     vector<Individual*> population(populationSize, NULL);
-    this->generations = generations; this->population = population; this->mutationFrequency = mutationFrequency;
+    this->generations = generations; this->population = population;
+    this->mutationFrequency = mutationFrequency; this->preservedPopulationPercentage = preservedPopulationPercentage;
     
     switch (crossoverMethod) {
         case 1:

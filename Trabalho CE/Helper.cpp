@@ -185,6 +185,7 @@ void Helper::generateExecutionId(){
     to_string(Parameters::GENERATIONS) + "_" +
     to_string(Parameters::POPULATION_SIZE) + "_" +
     (to_string(Parameters::MUTATION_FREQUENCY)).substr(0, 5) + "_" +
+    (to_string(Parameters::PRESERVED_POPULATION_PERCENTAGE)).substr(0, 5) + "_" +
     Helper::getNormalizedCurrentTimeStamp() + "_";
     
     Helper::executionId.erase(remove(Helper::executionId.begin(), Helper::executionId.end(), '.'), Helper::executionId.end());

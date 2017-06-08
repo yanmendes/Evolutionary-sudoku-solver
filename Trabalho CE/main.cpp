@@ -12,7 +12,7 @@
 
 bool dev = true;
 int populationSize = 500, generations = 500;
-double mutationFrequency = 0.2;
+double mutationFrequency = 0.2, preservedPopulationPercentage = 0.1;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
     outputFolder = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/Output/";
@@ -88,6 +88,9 @@ int processArgs(int argc, const char * argv[]){
     if(mutationFrequency > 1)
         mutationFrequency /= 100;
     
+    if(preservedPopulationPercentage > 1)
+        preservedPopulationPercentage /= 100;
+    
     return 0;
 }
 
@@ -105,6 +108,7 @@ int main(int argc, const char * argv[]) {
     
     Parameters::GENERATIONS = generations;
     Parameters::MUTATION_FREQUENCY = mutationFrequency * 100;
+    Parameters::PRESERVED_POPULATION_PERCENTAGE = preservedPopulationPercentage * 100;
     Parameters::POPULATION_SIZE = populationSize;
     Parameters::OUTPUT_FOLDER = outputFolder;
     Helper::generateExecutionId();
@@ -115,7 +119,7 @@ int main(int argc, const char * argv[]) {
     
     for(int crossoverMethod : crossoverMethods){
         for(int mutationMethod : mutationMethods){
-            GeneticAlgorithm * g = new GeneticAlgorithm(crossoverMethod, mutationMethod, populationSize, generations, mutationFrequency);
+            GeneticAlgorithm * g = new GeneticAlgorithm(crossoverMethod, mutationMethod, populationSize, generations, mutationFrequency, preservedPopulationPercentage);
             cout << "- - - - - - Selected Method: " << g->getCrossoverMethod() << " - - - - - - " << endl;
         
             for(Individual * i : boards){

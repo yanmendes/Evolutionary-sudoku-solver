@@ -9,5 +9,5 @@
 #include "Parameters.hpp"
 
 int Parameters::GENERATIONS, Parameters::POPULATION_SIZE;
-double Parameters::MUTATION_FREQUENCY;
+double Parameters::MUTATION_FREQUENCY, Parameters::PRESERVED_POPULATION_PERCENTAGE;
 string Parameters::OUTPUT_FOLDER;

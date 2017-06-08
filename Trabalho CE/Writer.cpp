@@ -27,7 +27,8 @@ void Writer::writeResults(double elapsedTime){
     file << "Number of generations passed: " << g->getGenerationsPassed() << endl;
     file << "Crossover method: " << g->getCrossoverMethod() << endl;
     file << "Mutation method: " << g->getMutationMethod() << endl;
-    file << "Mutation frequency: " << g->getMutationFrequency() * 100 << "%" << endl << endl;
+    file << "Mutation frequency: " << g->getMutationFrequency() * 100 << "%" << endl;
+    file << "Preserved population percentage: " << g->getPreservedPopulationPercentage() * 100 << "%" << endl << endl;
 
     file << "########TEST RESULTS########" << endl;
     file << "Elapsed time: " << elapsedTime << " ms" << endl;
