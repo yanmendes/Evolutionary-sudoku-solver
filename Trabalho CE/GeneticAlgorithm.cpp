@@ -13,11 +13,13 @@
 void GeneticAlgorithm::clearPopulation(void){
     int populationSize = (int) this->population.size();
     
+    for(Individual * i : this->population)
+        delete (i);
+
     this->population.clear();
+    this->population.shrink_to_fit();
     
-    vector<Individual*> population(populationSize, NULL);
-    
-    this->population = population;
+    this->population.resize(populationSize);
 }
 
 vector<pair<Individual*, Individual*>> GeneticAlgorithm::getParents(void){
@@ -58,6 +60,17 @@ void GeneticAlgorithm::solve(void){
     }
     
     this->generationsPassed = i;
+}
+
+GeneticAlgorithm::~GeneticAlgorithm(void){
+    for(Individual * i : this->population)
+        delete (i);
+    
+    this->population.clear();
+    this->population.shrink_to_fit();
+    
+    this->averageFitness.clear();
+    this->averageFitness.shrink_to_fit();
 }
 
 /*************DOMAIN DEPENDABLE METHODS*************/
@@ -144,7 +157,7 @@ Individual * GeneticAlgorithm::crossover(Individual * p1, Individual * p2){
         if(i % 2)
             continue;
         else
-            (ind->*Individual::currentSetter)(i, h.toArray((p2->*Individual::currentGetter)(i)));
+            (ind->*Individual::currentSetter)(i, (p2->*Individual::currentGetter)(i));
     }
         
     return ind;

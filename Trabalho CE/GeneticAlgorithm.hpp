@@ -83,7 +83,7 @@ public:
     vector<double> getAverageFitness() {return this->averageFitness;};
     
     //Destructor
-    ~GeneticAlgorithm(){this->population.clear(); this->averageFitness.clear();};
+    ~GeneticAlgorithm();
 };
 
 #endif /* GeneticAlgorithm_hpp */

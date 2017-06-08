@@ -11,7 +11,7 @@
 #include "GeneticAlgorithm.hpp"
 
 bool dev = true;
-int populationSize = 100, generations = 500;
+int populationSize = 500, generations = 500;
 double mutationFrequency = 0.2;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",

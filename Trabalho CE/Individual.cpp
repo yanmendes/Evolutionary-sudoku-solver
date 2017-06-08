@@ -11,25 +11,25 @@
 Individual::currentGetterMethod Individual::currentGetter;
 Individual::currentSetterMethod Individual::currentSetter;
 
-Individual::Individual(int limit, int * matrix){
+Individual::Individual(int limit, vector<int> matrix){
     this->limit = limit;
-    this->sudokuBoard = matrix;
     
-    for(int i = 0; i < this->limit * this->limit; ++i)
-        if(matrix[i])
+    for(int i = 0; i < this->limit * this->limit; ++i){
+        this->sudokuBoard.push_back(matrix.at(i));
+        if(matrix.at(i))
             this->fixedPositions.push_back(i);
+    }
 }
 
 Individual::Individual(Individual * templateIndividual){
     this->limit = templateIndividual->limit;
-    this->sudokuBoard = new int[this->limit * this->limit];
     this->fitness = -1;
     
-    for(int i : templateIndividual->fixedPositions)
-        this->fixedPositions.push_back(i);
+    for(int number : templateIndividual->fixedPositions)
+        this->fixedPositions.push_back(number);
     
-    for(int i = 0; i < this->limit * this->limit; ++i)
-        this->sudokuBoard[i] = templateIndividual->sudokuBoard[i];
+    for(int number : templateIndividual->sudokuBoard)
+        this->sudokuBoard.push_back(number);
 }
 
 Individual * Individual::fillWithRandom(){
@@ -55,14 +55,14 @@ vector<int> Individual::getSquare(int squareNumber){
 }
 
 vector<int> Individual::getRow(int rowNumber){
-    return h.toVector(h.slice(sudokuBoard, rowNumber * limit, rowNumber * limit + limit - 1), limit);
+    return h.slice(sudokuBoard, rowNumber * limit, rowNumber * limit + limit - 1);
 }
 
 vector<int> Individual::getColumn(int colNumber){
-    return h.toVector(h.slice(sudokuBoard, colNumber, limit * limit - (limit - colNumber), limit), limit);
+    return h.slice(sudokuBoard, colNumber, limit * limit - (limit - colNumber), limit);
 }
 
-Individual * Individual::setSquare(int squareNumber, int * values){
+Individual * Individual::setSquare(int squareNumber, vector<int> values){
     int sqrtLimit = sqrt(this->limit);
     int offset = (squareNumber/sqrtLimit) * this->limit * sqrtLimit + (squareNumber % sqrtLimit) * sqrtLimit;
     
@@ -74,8 +74,8 @@ Individual * Individual::setSquare(int squareNumber, int * values){
         int matrixPosition = j + offset;
     
         if(binary_search(this->fixedPositions.begin(), this->fixedPositions.end(), matrixPosition)
-                              && this->sudokuBoard[matrixPosition] != values[j])
-            swap(values[j], values[h.find(values, limit, this->sudokuBoard[matrixPosition])]);
+                              && this->sudokuBoard.at(matrixPosition) != values.at(j))
+            swap(values.at(j), values.at(h.find(values, limit, this->sudokuBoard.at(matrixPosition))));
     }
     
     offset = (squareNumber/sqrtLimit) * this->limit * sqrtLimit + (squareNumber % sqrtLimit) * sqrtLimit;
@@ -83,40 +83,40 @@ Individual * Individual::setSquare(int squareNumber, int * values){
         if(j && !(j % sqrtLimit))
             offset += this->limit - sqrtLimit;
         
-        this->sudokuBoard[j + offset] = values[j];
+        this->sudokuBoard.at(j + offset) = values.at(j);
     }
     
     return this;
 }
 
-Individual * Individual::setRow(int rowNumber, int * values){
+Individual * Individual::setRow(int rowNumber, vector<int> values){
     //Corrects the row with the fixed values from the board
     for(int j = 0; j < this->limit; ++j){
         int matrixPosition = rowNumber * this->limit + j;
         
         if(binary_search(this->fixedPositions.begin(), this->fixedPositions.end(), matrixPosition)
-           && this->sudokuBoard[matrixPosition] != values[j])
-            swap(values[j], values[h.find(values, limit, this->sudokuBoard[matrixPosition])]);
+           && this->sudokuBoard.at(matrixPosition) != values.at(j))
+            swap(values.at(j), values.at(h.find(values, limit, this->sudokuBoard.at(matrixPosition))));
     }
     
     for(int j = 0; j < this->limit; ++j)
-        this->sudokuBoard[rowNumber * this->limit + j] = values[j];
+        this->sudokuBoard.at(rowNumber * this->limit + j) = values.at(j);
     
     return this;
 }
 
-Individual * Individual::setColumn(int colNumber, int * values){
+Individual * Individual::setColumn(int colNumber, vector<int> values){
     //Corrects the column with the fixed values from the board
     for(int j = 0; j < this->limit; ++j){
         int matrixPosition = j * this->limit + colNumber;
         
         if(binary_search(this->fixedPositions.begin(), this->fixedPositions.end(), matrixPosition)
-           && this->sudokuBoard[matrixPosition] != values[j])
-            swap(values[j], values[h.find(values, limit, this->sudokuBoard[matrixPosition])]);
+           && this->sudokuBoard.at(matrixPosition) != values.at(j))
+            swap(values.at(j), values.at(h.find(values, limit, this->sudokuBoard.at(matrixPosition))));
     }
     
     for(int j = 0; j < this->limit; ++j)
-        this->sudokuBoard[j * this->limit + colNumber] = values[j];
+        this->sudokuBoard.at(j * this->limit + colNumber) = values.at(j);
 
     return this;
 }
@@ -129,13 +129,13 @@ int Individual::getFitness(){
     
     for(int i = 0; i < this->limit; ++i){
         //Checks for duplicates in each row
-        wrongNumbers -= h.getNumberOfDuplicates(h.toArray(this->getRow(i)), this->limit);
+        wrongNumbers -= h.getNumberOfDuplicates(this->getRow(i), this->limit);
         
         //Checks for duplicates in each column
-        wrongNumbers -= h.getNumberOfDuplicates(h.toArray(this->getColumn(i)), this->limit);
+        wrongNumbers -= h.getNumberOfDuplicates(this->getColumn(i), this->limit);
         
         //Checks for duplicates in each square
-        wrongNumbers -= h.getNumberOfDuplicates(h.toArray(this->getSquare(i)), this->limit);
+        wrongNumbers -= h.getNumberOfDuplicates(this->getSquare(i), this->limit);
     }
     
     this->fitness = wrongNumbers;

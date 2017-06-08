@@ -20,10 +20,10 @@ vector<Individual*> Reader::parseSudokus(string file){
     inputFile >> instances >> limit;
     
     for(int k = 0; k < instances; ++k){
-        int * sudokuBoard = new int[limit * limit];
+        vector<int> sudokuBoard (limit * limit);
         for(int i = 0; i < limit; ++i)
             for(int j = 0; j < limit; ++j)
-                inputFile >> sudokuBoard[i * limit + j];
+                inputFile >> sudokuBoard.at(i * limit + j);
         
         boards.push_back(new Individual(limit, sudokuBoard));
     }
