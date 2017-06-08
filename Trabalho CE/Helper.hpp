@@ -46,17 +46,17 @@ public:
     vector<string> explode(string const &, char);
     static string getCurrentTimeStamp();
     static string getNormalizedCurrentTimeStamp();
-    static int find(int*, int, int);
-    static int* generateRandomSequence(int);
+    static int find(vector<int>, int, int);
+    static vector<int> generateRandomSequence(int);
     static int* toArray(vector<int>);
     static vector<int> toVector(int*, int);
-    static string getMatrix(int*, int);
-    static void printMatrix(int *, int);
+    static string getMatrix(vector<int>, int);
+    static void printMatrix(vector<int>, int);
     static unsigned int generateRandomNumber(int, int);
-    static string createOutputFileName(string, string, int*, int);
-    static int getNumberOfDuplicates(int*, int);
-    static int* slice(int*, int, int, int);
-    static int* slice(int*, int, int);
+    static string createOutputFileName(string, string, vector<int>, int);
+    static int getNumberOfDuplicates(vector<int>, int);
+    static vector<int> slice(vector<int>, int, int, int);
+    static vector<int> slice(vector<int>, int, int);
     static void generateExecutionId(void);
 };
 

@@ -44,6 +44,10 @@ private:
     //Mutation method(s)
     mutationMethod currentMutationMethod;
     getMethodName getCurrentMutationMethodName;
+    
+        //Shuffles a random square
+        void shuffleRandomSquare(Individual*);
+        string shuffleRandoSquaresName(void) {return "Shuffle random square";};
 public:
     //Constructor
     GeneticAlgorithm(int, int, int, int, double);
@@ -69,7 +73,7 @@ public:
     vector<double> getAverageFitness() {return this->averageFitness;};
     
     //Destructor
-    ~GeneticAlgorithm(){this->population.clear(); this->averageFitness.clear();};
+    ~GeneticAlgorithm();
 };
 
 #endif /* GeneticAlgorithm_hpp */

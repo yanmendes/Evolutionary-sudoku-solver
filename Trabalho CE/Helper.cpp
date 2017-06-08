@@ -84,23 +84,23 @@ string Helper::getNormalizedCurrentTimeStamp(){
     return ts;
 }
 
-int Helper::find(int * A, int n, int val){
+int Helper::find(vector<int> A, int n, int val){
     int i;
     
     for(i = 0; i < n; ++i)
-        if(A[i] == val)
+        if(A.at(i) == val)
             break;
     
     return i;
 }
 
-int * Helper::generateRandomSequence(int limit){
-    int * data = new int[limit];
+vector<int> Helper::generateRandomSequence(int limit){
+    vector<int> data;
     
-    for(int i = 0; i < limit; ++i)
-        data[i] = i + 1;
+    for(int i = 1; i <= limit; ++i)
+        data.push_back(i);
     
-    std::random_shuffle(data, data + limit);
+    std::random_shuffle(data.begin(), data.end());
     
     return data;
 }
@@ -121,19 +121,19 @@ vector<int> Helper::toVector(int * array, int size){
     return r;
 }
 
-string Helper::getMatrix(int * vec, int limit){
+string Helper::getMatrix(vector<int> vec, int limit){
     stringstream result;
     
     for(int i = 0; i < limit; ++i){
         for(int j = 0; j < limit; ++j)
-            result << vec[i * limit + j] << '\t';
+            result << vec.at(i * limit + j) << '\t';
         result << '\n';
     }
     
     return result.str();
 }
 
-void Helper::printMatrix(int * vec, int limit){
+void Helper::printMatrix(vector<int> vec, int limit){
     cout << Helper::getMatrix(vec, limit);
 }
 
@@ -141,11 +141,11 @@ unsigned int Helper::generateRandomNumber(int inferiorRange, int superiorRange){
     return mt_rand() % superiorRange + inferiorRange;
 }
 
-string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, int * matrix, int limit){
+string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, vector<int> matrix, int limit){
     string output;
     unsigned long long int sum = 0;
     for(int i = 0; i < limit * limit; ++i)
-        sum += (matrix[i] * i);
+        sum += (matrix.at(i) * i);
     
     string instanceIdentifier = crossoverMethod + "_" + mutationMethod + "_" + to_string(sum) + ".out";
     
@@ -156,27 +156,26 @@ string Helper::createOutputFileName(string crossoverMethod, string mutationMetho
     return output;
 }
 
-int Helper::getNumberOfDuplicates(int * vec, int limit){
+int Helper::getNumberOfDuplicates(vector<int> vec, int limit){
     int c = 0;
     
     for(int i = 0; i < limit - 1; ++i)
         for(int j = i + 1; j < limit; ++j)
-            c += vec[i] == vec[j];
+            c += vec.at(i) == vec.at(j);
     
     return c;
 }
 
-int * Helper::slice(int * vec, int inferiorRange, int superiorRange, int jump){
-    int * r = new int[(superiorRange - inferiorRange) / jump + 1];
-    int j = 0;
+vector<int> Helper::slice(vector<int> vec, int inferiorRange, int superiorRange, int jump){
+    vector<int> r;
     
     for(int i = inferiorRange; i <= superiorRange; i += jump)
-        r[j++] = vec[i];
+        r.push_back(vec.at(i));
     
     return r;
 }
 
-int * Helper::slice(int * vec, int inferiorRange, int superiorRange){
+vector<int> Helper::slice(vector<int> vec, int inferiorRange, int superiorRange){
     return Helper::slice(vec, inferiorRange, superiorRange, 1);
 }
 

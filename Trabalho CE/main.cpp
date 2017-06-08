@@ -11,7 +11,7 @@
 #include "GeneticAlgorithm.hpp"
 
 bool dev = true;
-int populationSize = 100, generations = 500;
+int populationSize = 500, generations = 500;
 double mutationFrequency = 0.2;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
@@ -27,15 +27,13 @@ static void usage(){
     "    -p     Population size\n" <<
     "    -g     Number of generations\n" <<
     "    -f     Mutation frequency\n" <<
-    "Crossover method:\n" <<
-    "    1      Crossover method 1\n" <<
-    "    2      Crossover method 2\n" <<
-    "    3      Crossover method 3\n" <<
+    "Crossover methods:\n" <<
+    "    1      Combine solved squares\n" <<
+    "    2      Combine solved rows\n" <<
+    "    3      Combine solved columns\n" <<
     "    all    All methods\n"
-    "Mutation method:\n" <<
-    "    1      Mutation method 1\n" <<
-    "    2      Mutation method 2\n" <<
-    "    3      Mutation method 3\n" <<
+    "Mutation methods:\n" <<
+    "    1      Shuffle random square\n" <<
     "    all    All methods\n";
 }
 
