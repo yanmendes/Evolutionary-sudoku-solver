@@ -11,8 +11,8 @@
 #include "GeneticAlgorithm.hpp"
 
 bool dev = true;
-int populationSize = 500, generations = 500;
-double mutationFrequency = 0.2, preservedPopulationPercentage = 0.1;
+int populationSize = 1000, generations = 1000;
+double mutationFrequency = 20, preservedPopulationPercentage = 10;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
     outputFolder = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/Output/";
@@ -24,9 +24,10 @@ static void usage(){
     "    ./Trabalho CE [options] -i $input/file/path$ -o $output/folder/path$ -c CrossoverMethods -m MutationMethods\n\n" <<
     "Options:\n" <<
     "    -h     Show this help\n" <<
-    "    -p     Population size\n" <<
+    "    -s     Population size\n" <<
     "    -g     Number of generations\n" <<
     "    -f     Mutation frequency\n" <<
+    "    -p     Preserved population percentage\n" <<
     "Crossover methods:\n" <<
     "    1      Combine solved squares\n" <<
     "    2      Combine solved rows\n" <<
@@ -55,12 +56,14 @@ int processArgs(int argc, const char * argv[]){
             inputFile = argv[++argInd];
         else if (!strcmp(argv[argInd], "-o"))
             outputFolder = argv[++argInd];
-        else if (!strcmp(argv[argInd], "-p"))
+        else if (!strcmp(argv[argInd], "-s"))
             populationSize = atoi(argv[++argInd]);
         else if (!strcmp(argv[argInd], "-g"))
             generations = atoi(argv[++argInd]);
         else if (!strcmp(argv[argInd], "-f"))
             generations = atof(argv[++argInd]);
+        else if (!strcmp(argv[argInd], "-p"))
+            preservedPopulationPercentage = atof(argv[++argInd]);
     }
     
     if(!strcmp(argv[argInd], "-c")){
@@ -85,11 +88,11 @@ int processArgs(int argc, const char * argv[]){
                 mutationMethods.push_back(atoi(argv[argInd]));
     }
     
-    if(mutationFrequency > 1)
-        mutationFrequency /= 100;
+    if(mutationFrequency < 1)
+        mutationFrequency *= 100;
     
-    if(preservedPopulationPercentage > 1)
-        preservedPopulationPercentage /= 100;
+    if(preservedPopulationPercentage < 1)
+        preservedPopulationPercentage *= 100;
     
     return 0;
 }
@@ -107,8 +110,8 @@ int main(int argc, const char * argv[]) {
         return errors;
     
     Parameters::GENERATIONS = generations;
-    Parameters::MUTATION_FREQUENCY = mutationFrequency * 100;
-    Parameters::PRESERVED_POPULATION_PERCENTAGE = preservedPopulationPercentage * 100;
+    Parameters::MUTATION_FREQUENCY = mutationFrequency;
+    Parameters::PRESERVED_POPULATION_PERCENTAGE = preservedPopulationPercentage;
     Parameters::POPULATION_SIZE = populationSize;
     Parameters::OUTPUT_FOLDER = outputFolder;
     Helper::generateExecutionId();
