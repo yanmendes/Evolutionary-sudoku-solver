@@ -10,18 +10,28 @@
 
 Roulette::Roulette(vector<Individual*> population){
     this->population = population;
-    this->totalFitness = 0;
+    this->totalFitness = this->normalizedFitness = 0;
+    long long int offset;
     
     for(Individual * i : population)
         this->totalFitness += i->getFitness();
+    
+    //In case of minimization functions, normalize the fitness so it can spin on the roullete
+    if((offset = population.back()->getFitness()) < 0)
+        for(Individual * ind : this->population){
+            ind->setFitness(ind->getFitness() + (offset * -1) + 1);
+            this->normalizedFitness += ind->getFitness();
+        }
+    else
+        this->normalizedFitness = this->totalFitness;
 }
 
 pair<Individual*, Individual*> Roulette::spin(){
     Individual *p1 = NULL, *p2 = NULL;
-    unsigned int r1, r2, currentSum = 0;
+    long long int r1, r2, currentSum = 0;
     
-    r1 = h.generateRandomNumber(0, this->totalFitness);
-    r2 = h.generateRandomNumber(0, this->totalFitness);
+    r1 = h.generateRandomNumber(0, this->normalizedFitness);
+    r2 = h.generateRandomNumber(0, this->normalizedFitness);
     
     for(int i = 0; i < this->population.size(); ++i){
         currentSum += population.at(i)->getFitness();
@@ -37,14 +47,15 @@ pair<Individual*, Individual*> Roulette::spin(){
 }
 
 vector<pair<Individual*, Individual*>> Roulette::stochasticUniversalSampling(){
-    double distanceBetweenPointers = (double) this->totalFitness / this->population.size(),
+    double distanceBetweenPointers = (double) this->normalizedFitness / this->population.size(),
            currentSum = h.generateRandomNumber(0, floor(distanceBetweenPointers)); //Offset
     int i = 0;
-    unsigned int populationSum = this->population.at(0)->getFitness();
+    
+    long long int populationSum = this->population.at(0)->getFitness();
     vector<Individual*> selectedIndividuals;
     vector<pair<Individual*, Individual*>> parents;
     
-    while(currentSum <= this->totalFitness && selectedIndividuals.size() < this->population.size()){
+    while(currentSum <= this->normalizedFitness && selectedIndividuals.size() < this->population.size()){
         while(populationSum < currentSum)
             populationSum += population.at(i++)->getFitness();
         

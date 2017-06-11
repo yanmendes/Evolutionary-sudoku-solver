@@ -14,7 +14,8 @@
 
 class Result{
 public:
-    int fittestIndividualFitness, generationsPassed;
+    int generationsPassed;
+    long long int fittestIndividualFitness;
     vector<double> averageFitness;
     double elapsedTime;
     string crossoverMethod, mutationMethod;

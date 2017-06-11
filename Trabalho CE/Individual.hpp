@@ -14,16 +14,21 @@
 class Individual{
 private:
     //Attributes
-    int fitness, limit;
+    int limit;
+    long long int fitness;
     vector<int> sudokuBoard, fixedPositions;
     static Helper h;
 public:
     //Defining new data types
     typedef vector<int> (Individual::*currentGetterMethod)(int);
     typedef Individual * (Individual::*currentSetterMethod)(int, vector<int>);
+    typedef void (Individual::*fitnessMethod)(void);
+    typedef string (*getMethodName)(void);
     
     static currentGetterMethod currentGetter;
     static currentSetterMethod currentSetter;
+    static fitnessMethod currentFitnessMethod;
+    static getMethodName currentFitnessMethodName;
     
     //Constructors
     Individual(int, vector<int>);
@@ -31,9 +36,11 @@ public:
     
     //Auxiliary methods
     Individual * fillWithRandom(void);
+    Individual * resetFitness(void) {this->fitness = -1; this->getFitness(); return this;};
+    static string getCurrentFitnessMethodName();
     
     //Getters
-    int getFitness(void);
+    long long int getFitness(void);
     int getLimit(void) {return this->limit;};
     vector<int> getSudokuBoard(void) {return this->sudokuBoard;};
     vector<int> getFixedPositions(void) {return this->fixedPositions;};
@@ -47,6 +54,15 @@ public:
     Individual * setSquare(int, vector<int>);
     Individual * setRow(int, vector<int>);
     Individual * setColumn(int, vector<int>);
+    Individual * setFitness(long long int);
+    
+    //Fitness method(s)
+        void numberOfWrongNumbers(void);
+        static string numberOfWrongNumbersName(void) {return "Number of wrong numbers";};
+        static int maxFitnessWrongNumbers(void);
+        void mantereKoljonenOptimizationFunction(void);
+        static string mantereKoljonenOptimizationFunctionName(void) {return "Mantere and Koljen optmization function";};
+        static int maxFitnessKoljonenOptimizationFunction(void);
     
     //Destructor
     ~Individual(void) {this->sudokuBoard.clear(); this->sudokuBoard.shrink_to_fit();

@@ -52,12 +52,18 @@ public:
     static vector<int> toVector(int*, int);
     static string getMatrix(vector<int>, int);
     static void printMatrix(vector<int>, int);
-    static unsigned int generateRandomNumber(int, int);
-    static string createOutputFileName(string, string, vector<int>, int);
+    static long long int generateRandomNumber(long long int, long long int);
+    static string createOutputFileName(string, string, string, vector<int>, int);
     static int getNumberOfDuplicates(vector<int>, int);
     static vector<int> slice(vector<int>, int, int, int);
     static vector<int> slice(vector<int>, int, int);
     static void generateExecutionId(void);
+    static int apSum(int);
+    static long long int factorial(int);
+    static long long int multiply(vector<int>);
+    
+    static long long int LIMIT_FACTORIAL, LIMIT_SUM;
+    static int LIMIT;
 };
 
 #endif /* Helper_hpp */

@@ -12,7 +12,8 @@ static vector<Result*> results;
 
 Writer::Writer(Individual * i, GeneticAlgorithm * g){
     this->outputFile =
-        h.createOutputFileName(g->getCrossoverMethod(), g->getMutationMethod(), i->getSudokuBoard(), i->getLimit());
+        h.createOutputFileName(g->getCrossoverMethod(), g->getMutationMethod(), Individual::currentFitnessMethodName(),
+                               i->getSudokuBoard(), i->getLimit());
     this->g = g;
 }
 

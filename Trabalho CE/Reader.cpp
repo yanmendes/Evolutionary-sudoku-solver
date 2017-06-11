@@ -19,6 +19,10 @@ vector<Individual*> Reader::parseSudokus(string file){
     
     inputFile >> instances >> limit;
     
+    Helper::LIMIT = limit;
+    Helper::LIMIT_FACTORIAL = Helper::factorial(limit);
+    Helper::LIMIT_SUM = Helper::apSum(limit);
+    
     for(int k = 0; k < instances; ++k){
         vector<int> sudokuBoard (limit * limit);
         for(int i = 0; i < limit; ++i)

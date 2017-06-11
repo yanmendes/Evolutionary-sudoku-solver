@@ -9,6 +9,8 @@
 #include "Helper.hpp"
 
 string Helper::executionId;
+long long int Helper::LIMIT_FACTORIAL, Helper::LIMIT_SUM;
+int Helper::LIMIT;
 
 long int seed = SEED;
 mt19937 mt_rand((unsigned int) seed);
@@ -137,17 +139,18 @@ void Helper::printMatrix(vector<int> vec, int limit){
     cout << Helper::getMatrix(vec, limit);
 }
 
-unsigned int Helper::generateRandomNumber(int inferiorRange, int superiorRange){
-    return mt_rand() % superiorRange + inferiorRange;
+long long int Helper::generateRandomNumber(long long int inferiorRange, long long int superiorRange){
+    return (mt_rand() % superiorRange) + inferiorRange;
 }
 
-string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, vector<int> matrix, int limit){
+string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, string fitnessMethod, vector<int> matrix,
+                                    int limit){
     string output;
     unsigned long long int sum = 0;
     for(int i = 0; i < limit * limit; ++i)
         sum += (matrix.at(i) * i);
     
-    string instanceIdentifier = crossoverMethod + "_" + mutationMethod + "_" + to_string(sum) + ".out";
+    string instanceIdentifier = crossoverMethod + "_" + mutationMethod + "_" + fitnessMethod + "_" + to_string(sum) + ".out";
     
     replace(instanceIdentifier.begin(), instanceIdentifier.end(), ' ', '_');
     
@@ -189,4 +192,26 @@ void Helper::generateExecutionId(){
     Helper::getNormalizedCurrentTimeStamp() + "_";
     
     Helper::executionId.erase(remove(Helper::executionId.begin(), Helper::executionId.end(), '.'), Helper::executionId.end());
+}
+
+long long int Helper::factorial(int number){
+    long long int answer = 1;
+    
+    for(int i = 2; i <= number; ++i)
+        answer *= i;
+    
+    return answer;
+}
+
+int Helper::apSum(int number){
+    return (1 + number) * number / 2;
+}
+
+long long int Helper::multiply(vector<int> vec){
+    long long int ans = 1;
+    
+    for(int i : vec)
+        ans *= i;
+    
+    return ans;
 }

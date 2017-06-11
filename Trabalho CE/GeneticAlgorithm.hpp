@@ -25,6 +25,7 @@ private:
     //Attributes
     vector<Individual*> population;
     int generations, generationsPassed;
+    long long int maxFitness;
     double mutationFrequency, preservedPopulationPercentage;
     static Helper h;
     vector<double> averageFitness;
@@ -57,12 +58,16 @@ private:
     mutationMethod currentMutationMethod;
     getMethodName getCurrentMutationMethodName;
     
-        //Shuffles a random square
-        void shuffleRandomSquare(Individual*);
-        string shuffleRandoSquaresName(void) {return "Shuffle random square";};
+        //Shuffles a random setter
+        void shuffleRandomSetter(Individual*);
+        string shuffleRandomSetterName(void) {return "Shuffle random square|row|column";};
+    
+        //Shuffles random position
+        void flipRandomPositions(Individual*);
+        string flipRandomPositionsName() {return "Shuffle random positions";};
 public:
     //Constructor
-    GeneticAlgorithm(int, int, int, int, double, double);
+    GeneticAlgorithm(int, int, int, int, int, double, double);
     
     //Solver
     void solve(void);

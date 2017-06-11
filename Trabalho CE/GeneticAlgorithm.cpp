@@ -36,24 +36,29 @@ vector<pair<Individual*, Individual*>> GeneticAlgorithm::selectParents(void){
 
 void GeneticAlgorithm::mergePopulation(vector<Individual *> children){
     sort(children.begin(), children.end(), this->reverseCompFunction);
+    
+    //Resets the population fitness in case it was changed in the roulette
+    for(Individual * i : this->population)
+        i->resetFitness();
         
     int iterations = (1 - this->preservedPopulationPercentage / 100) * this->population.size();
+    
+    //Clearing old individuals
     for(int i = 0; i < iterations; ++i){
         Individual * ind = this->population.back();
         delete ind;
         this->population.pop_back();
     }
-        
+    
+    //Inserting new members of the population
     for(int i = 0; i < iterations; ++i){
         this->population.push_back(children.back());
         children.pop_back();
     }
-        
+    
+    //Deleting members that will not be used
     for(Individual * i : children)
         delete i;
-        
-    children.clear();
-    children.shrink_to_fit();
 }
 
 void GeneticAlgorithm::solve(void){
@@ -80,6 +85,7 @@ void GeneticAlgorithm::solve(void){
         this->mergePopulation(children);
         
         children.clear();
+        children.shrink_to_fit();
     }
 }
 
@@ -105,8 +111,8 @@ GeneticAlgorithm::~GeneticAlgorithm(void){
  * @param generations int Number of generations
  * @param mutationFrequency int Mutation frequency
  */
-GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int populationSize, int generations,
-                                   double mutationFrequency, double preservedPopulationPercentage){
+GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int fitnessMethod, int populationSize,
+                                   int generations, double mutationFrequency, double preservedPopulationPercentage){
     vector<Individual*> population(populationSize, NULL);
     this->generations = generations; this->population = population;
     this->mutationFrequency = mutationFrequency; this->preservedPopulationPercentage = preservedPopulationPercentage;
@@ -137,11 +143,31 @@ GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int 
     
     switch (mutationMethod) {
         case 1:
-            this->currentMutationMethod = &GeneticAlgorithm::shuffleRandomSquare;
-            this->getCurrentMutationMethodName = &GeneticAlgorithm::shuffleRandoSquaresName;
+            this->currentMutationMethod = &GeneticAlgorithm::shuffleRandomSetter;
+            this->getCurrentMutationMethodName = &GeneticAlgorithm::shuffleRandomSetterName;
+            break;
+        case 2:
+            this->currentMutationMethod = &GeneticAlgorithm::flipRandomPositions;
+            this->getCurrentMutationMethodName = &GeneticAlgorithm::flipRandomPositionsName;
             break;
         default:
             cout << "Invalid input mutation method" << endl;
+            exit(4);
+    }
+    
+    switch (fitnessMethod) {
+        case 1:
+            Individual::currentFitnessMethod = &Individual::numberOfWrongNumbers;
+            Individual::currentFitnessMethodName = &Individual::numberOfWrongNumbersName;
+            this->maxFitness = Individual::maxFitnessWrongNumbers();
+            break;
+        case 2:
+            Individual::currentFitnessMethod = &Individual::mantereKoljonenOptimizationFunction;
+            Individual::currentFitnessMethodName = &Individual::mantereKoljonenOptimizationFunctionName;
+            this->maxFitness = Individual::maxFitnessKoljonenOptimizationFunction();
+            break;
+        default:
+            cout << "Invalid input fitness method" << endl;
             exit(4);
     }
     
@@ -155,9 +181,7 @@ GeneticAlgorithm::GeneticAlgorithm(int crossoverMethod, int mutationMethod, int 
  * @return bool Solution has been found?
  */
 bool GeneticAlgorithm::foundSolution(void){
-    Individual * fittest = this->getFittest();
-    
-    return fittest->getFitness() == (fittest->getLimit() * fittest->getLimit());
+    return this->getFittest()->getFitness() == this->maxFitness;
 }
 
 /*
@@ -187,9 +211,19 @@ Individual * GeneticAlgorithm::crossover(Individual * p1, Individual * p2){
 
 /*************MUTATION METHODS*************/
 
-void GeneticAlgorithm::shuffleRandomSquare(Individual * i){
-    long int seed = SEED;
-    mt19937 mt_rand((unsigned int) seed);
+void GeneticAlgorithm::shuffleRandomSetter(Individual * i){
+    (i->*Individual::currentSetter)((int) h.generateRandomNumber(0, i->getLimit()), h.generateRandomSequence(i->getLimit()));
+}
+
+void GeneticAlgorithm::flipRandomPositions(Individual * i){
+    int element = (int) h.generateRandomNumber(0, i->getLimit());
+    vector<int> vec = (i->*Individual::currentGetter)(element);
     
-    (i->*Individual::currentSetter)(mt_rand() % i->getLimit(), h.generateRandomSequence(i->getLimit()));
+    int maxSubstitutions = (int) h.generateRandomNumber(0, i->getLimit()) - (this->generationsPassed * 10) / this->generations;
+    
+    for(int j = 0; j < maxSubstitutions; ++j)
+        swap(vec.at(h.generateRandomNumber(0, i->getLimit())), vec.at(h.generateRandomNumber(0, i->getLimit())));
+    
+    (i->*Individual::currentSetter)(element, vec);
+        
 }

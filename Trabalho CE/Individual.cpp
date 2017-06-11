@@ -10,6 +10,8 @@
 
 Individual::currentGetterMethod Individual::currentGetter;
 Individual::currentSetterMethod Individual::currentSetter;
+Individual::fitnessMethod       Individual::currentFitnessMethod;
+Individual::getMethodName       Individual::currentFitnessMethodName;
 
 Individual::Individual(int limit, vector<int> matrix){
     this->limit = limit;
@@ -48,7 +50,7 @@ vector<int> Individual::getSquare(int squareNumber){
         if(j && !(j % sqrtLimit))
              offset += (this->limit - sqrtLimit);
         
-        square.push_back(this->sudokuBoard[j + offset]);
+        square.push_back(this->sudokuBoard.at(j + offset));
     }
     
     return square;
@@ -121,11 +123,25 @@ Individual * Individual::setColumn(int colNumber, vector<int> values){
     return this;
 }
 
-int Individual::getFitness(){
-    if(this->fitness != -1)
-        return this->fitness;
+long long int Individual::getFitness(){
+    if(this->fitness == -1)
+        (this->*currentFitnessMethod)();
     
-    int wrongNumbers = this->limit * this->limit;
+    return this->fitness;
+}
+
+Individual * Individual::setFitness(long long int fitness){
+    this->fitness = fitness;
+    
+    return this;
+}
+
+string Individual::getCurrentFitnessMethodName(){
+    return Individual::currentFitnessMethodName();
+}
+
+void Individual::numberOfWrongNumbers(){
+    int wrongNumbers = 3 * this->limit * this->limit;
     
     for(int i = 0; i < this->limit; ++i){
         //Checks for duplicates in each row
@@ -139,6 +155,34 @@ int Individual::getFitness(){
     }
     
     this->fitness = wrongNumbers;
+}
 
-    return wrongNumbers;
+int Individual::maxFitnessWrongNumbers(){
+    return 3 * Helper::LIMIT * Helper::LIMIT;
+}
+
+void Individual::mantereKoljonenOptimizationFunction(){
+    long long int gi1, gj1, gi2, gj2, gi3, gj3;
+    
+    gi1 = gj1 = gi2 = gj2 = gi3 = gj3 = 0;
+    
+    for(int i = 0; i < this->limit; ++i){
+        vector<int> row = this->getRow(i);
+        vector<int> column = this->getColumn(i);
+        
+        gi1 += abs(Helper::LIMIT_SUM - std::accumulate(row.begin(), row.end(), 0));
+        gj1 += abs(Helper::LIMIT_SUM - std::accumulate(column.begin(), column.end(), 0));
+        
+        gi2 += abs(Helper::LIMIT_FACTORIAL - h.multiply(row));
+        gi2 += abs(Helper::LIMIT_FACTORIAL - h.multiply(column));
+        
+        gi3 += h.getNumberOfDuplicates(row, this->limit);
+        gi3 += h.getNumberOfDuplicates(column, this->limit);
+    }
+    
+    this->fitness = - (10 * (gi1 + gj1) + (sqrt(gi2) + sqrt(gj2)) + 50 * (gi3 + gj3));
+}
+
+int Individual::maxFitnessKoljonenOptimizationFunction(){
+    return 0;
 }

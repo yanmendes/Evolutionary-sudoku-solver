@@ -17,13 +17,13 @@ using namespace std;
 class Roulette{
 private:
     vector<Individual*> population;
-    unsigned int totalFitness;
+    long long int totalFitness, normalizedFitness;
     Helper h;
 public:
     Roulette(vector<Individual*>);
     pair<Individual*, Individual*> spin();
     vector<pair<Individual*, Individual*>> stochasticUniversalSampling();
-    unsigned int getTotalFitness() {return this->totalFitness;};
+    long long int getTotalFitness() {return this->totalFitness;};
     ~Roulette(){this->population.clear();};
 };
 
