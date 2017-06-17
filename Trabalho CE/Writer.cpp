@@ -35,6 +35,7 @@ void Writer::writeResults(double elapsedTime){
     file << "Elapsed time: " << elapsedTime << " ms" << endl;
     file << "Last generation average fitness: " << g->getAverageFitness().back() << endl;
     file << "Fittest individual fitness: " << g->getFittest()->getFitness() << endl;
+    file << "Fittest individual amount of correct numbers: " << g->getFittest()->numberOfWrongNumbers() << endl;
     file << "Fittest individual: \n" << h.getMatrix(g->getFittest()->getSudokuBoard(), g->getFittest()->getLimit()) << endl;
     
     file.close();

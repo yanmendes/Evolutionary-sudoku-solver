@@ -26,7 +26,7 @@ static void usage(){
     "    -h     Show this help\n" <<
     "    -s     Population size\n" <<
     "    -g     Number of generations\n" <<
-    "    -mf     Mutation frequency\n" <<
+    "    -mf    Mutation frequency\n" <<
     "    -p     Preserved population percentage\n" <<
     "Crossover methods:\n" <<
     "    1      Combine solved squares\n" <<
@@ -35,7 +35,7 @@ static void usage(){
     "    all    All methods\n"
     "Mutation methods:\n" <<
     "    1      Shuffle random square|row|column\n" <<
-    "    2      Shuffle random positions\n" <<
+    "    2      Shuffle random positions in square|row|column\n" <<
     "    all    All methods\n"
     "Fitness methods:\n" <<
     "    1      Number of wrong numbers\n" <<

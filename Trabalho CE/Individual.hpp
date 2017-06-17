@@ -22,7 +22,7 @@ public:
     //Defining new data types
     typedef vector<int> (Individual::*currentGetterMethod)(int);
     typedef Individual * (Individual::*currentSetterMethod)(int, vector<int>);
-    typedef void (Individual::*fitnessMethod)(void);
+    typedef long long int (Individual::*fitnessMethod)(void);
     typedef string (*getMethodName)(void);
     
     static currentGetterMethod currentGetter;
@@ -57,10 +57,10 @@ public:
     Individual * setFitness(long long int);
     
     //Fitness method(s)
-        void numberOfWrongNumbers(void);
+        long long int numberOfWrongNumbers(void);
         static string numberOfWrongNumbersName(void) {return "Number of wrong numbers";};
         static int maxFitnessWrongNumbers(void);
-        void mantereKoljonenOptimizationFunction(void);
+        long long int mantereKoljonenOptimizationFunction(void);
         static string mantereKoljonenOptimizationFunctionName(void) {return "Mantere and Koljen optmization function";};
         static int maxFitnessKoljonenOptimizationFunction(void);
     

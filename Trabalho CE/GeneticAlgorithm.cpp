@@ -75,14 +75,14 @@ void GeneticAlgorithm::solve(void){
         //Recombination
         for(auto const parents : parentsVector)
             children.push_back((this->*currentCrossoverMethod)(parents.first, parents.second));
-    
-        //Mutation
-        for(Individual * i : children)
-            if(h.generateRandomNumber(0, 100) < this->mutationFrequency)
-                (this->*currentMutationMethod)(i);
         
         //Generate new population
         this->mergePopulation(children);
+    
+        //Mutation
+        for(Individual * i : this->population)
+            if(h.generateRandomNumber(0, 100) < this->mutationFrequency)
+                (this->*currentMutationMethod)(i);
         
         children.clear();
         children.shrink_to_fit();
@@ -219,11 +219,10 @@ void GeneticAlgorithm::flipRandomPositions(Individual * i){
     int element = (int) h.generateRandomNumber(0, i->getLimit());
     vector<int> vec = (i->*Individual::currentGetter)(element);
     
-    int maxSubstitutions = (int) h.generateRandomNumber(0, i->getLimit()) - (this->generationsPassed * 10) / this->generations;
+    int maxSubstitutions = (int) h.generateRandomNumber(1, i->getLimit()) - (this->generationsPassed * 10) / this->generations;
     
     for(int j = 0; j < maxSubstitutions; ++j)
         swap(vec.at(h.generateRandomNumber(0, i->getLimit())), vec.at(h.generateRandomNumber(0, i->getLimit())));
     
     (i->*Individual::currentSetter)(element, vec);
-        
 }
