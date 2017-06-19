@@ -15,14 +15,17 @@
 class Result{
 public:
     int generationsPassed;
+    unsigned long long int matrixHash;
     long long int fittestIndividualFitness;
     vector<double> averageFitness;
     double elapsedTime;
-    string crossoverMethod, mutationMethod;
+    string crossoverMethod, mutationMethod, fitnessMethod;
     
     Result(GeneticAlgorithm * g, double elapsedTime){
+        this->matrixHash = Helper::createMatrixHash(g->getTemplateIndividual()->getSudokuBoard(), g->getTemplateIndividual()->getLimit());
         this->crossoverMethod = g->getCrossoverMethod();
         this->mutationMethod = g->getMutationMethod();
+        this->fitnessMethod = Individual::getCurrentFitnessMethodName();
         this->fittestIndividualFitness = g->getFittest()->getFitness();
         this->generationsPassed = g->getGenerationsPassed();
         this->averageFitness = g->getAverageFitness();

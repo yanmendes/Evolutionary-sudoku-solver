@@ -143,14 +143,20 @@ long long int Helper::generateRandomNumber(long long int inferiorRange, long lon
     return (mt_rand() % superiorRange) + inferiorRange;
 }
 
-string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, string fitnessMethod, vector<int> matrix,
-                                    int limit){
-    string output;
+unsigned long long int Helper::createMatrixHash(vector<int> matrix, int limit){
     unsigned long long int sum = 0;
     for(int i = 0; i < limit * limit; ++i)
         sum += (matrix.at(i) * i);
     
-    string instanceIdentifier = crossoverMethod + "_" + mutationMethod + "_" + fitnessMethod + "_" + to_string(sum) + ".out";
+    return sum;
+}
+
+string Helper::createOutputFileName(string crossoverMethod, string mutationMethod, string fitnessMethod, vector<int> matrix,
+                                    int limit){
+    string output;
+    long long int matrixHash = Helper::createMatrixHash(matrix, limit);
+    
+    string instanceIdentifier = crossoverMethod + "_" + mutationMethod + "_" + fitnessMethod + "_" + to_string(matrixHash) + ".out";
     
     replace(instanceIdentifier.begin(), instanceIdentifier.end(), ' ', '_');
     

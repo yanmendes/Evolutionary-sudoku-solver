@@ -23,6 +23,7 @@ private:
     typedef string (GeneticAlgorithm::*getMethodName)(void);
     
     //Attributes
+    Individual * templateIndividual;
     vector<Individual*> population;
     int generations, generationsPassed;
     long long int maxFitness;
@@ -83,6 +84,7 @@ public:
     //Analytical data
     string getCrossoverMethod(void) {return (this->*getCurrentCrossoverMethodName)();};
     string getMutationMethod(void) {return (this->*getCurrentMutationMethodName)();};
+    Individual * getTemplateIndividual(void) {return this->templateIndividual;};
     int getPopulationSize() {return (int) this->population.size();};
     int getGenerations() {return this->generations;};
     double getMutationFrequency() {return this->mutationFrequency;};

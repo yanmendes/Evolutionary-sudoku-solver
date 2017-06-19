@@ -53,6 +53,7 @@ public:
     static string getMatrix(vector<int>, int);
     static void printMatrix(vector<int>, int);
     static long long int generateRandomNumber(long long int, long long int);
+    static unsigned long long int createMatrixHash(vector<int> matrix, int limit);
     static string createOutputFileName(string, string, string, vector<int>, int);
     static int getNumberOfDuplicates(vector<int>, int);
     static vector<int> slice(vector<int>, int, int, int);

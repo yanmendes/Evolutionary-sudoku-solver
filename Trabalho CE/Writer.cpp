@@ -48,22 +48,16 @@ void Writer::writeStatistcs(string outputFile){
     
     file.open(outputFile, fstream::out);
 
-    file << "Crossover Method;Mutation Method;Fittest individual fitness;Generations passed;Elapsed Time;Generation;Average Fitness\n";
+    file << "Instance;Fitness Method;Crossover Method;Mutation Method;Max Generations;Population Size; Mutation Frequency;Preserved Population Percentage;Fittest individual fitness;First Generation Average Fitness;Last Generation Average Fitness;Generations passed;Elapsed Time\n";
     
     for(Result * r : results){
         string e = to_string(r->elapsedTime);
         replace(e.begin(), e.end(), '.', ',');
         
-        file << r->crossoverMethod << ";" << r->mutationMethod << ";" << r->fittestIndividualFitness << ";"
-        << r->generationsPassed << ";" << e << '\n';
-        
-        int generation = 1;
-        for(double avg : r->averageFitness){
-            string a = to_string(avg);
-            replace(a.begin(), a.end(), '.', ',');
-            
-            file << ";" << ";" << ";" << ";" << ";" << generation++ << ";" << a << '\n';
-        }
+        file << r->matrixHash << ";" << r->fitnessMethod << ";" << r->crossoverMethod << ";" << r->mutationMethod << ";" <<
+        Parameters::GENERATIONS << ";" << Parameters::POPULATION_SIZE << ";" << Parameters::MUTATION_FREQUENCY << ";" <<
+        Parameters::PRESERVED_POPULATION_PERCENTAGE << ";" << r->fittestIndividualFitness << ";" << r->averageFitness.front() <<
+        ";" << r->averageFitness.back() << ";" << r->generationsPassed << ";" << e << '\n';
     }
     
     file.close();

@@ -11,8 +11,8 @@
 #include "GeneticAlgorithm.hpp"
 
 bool dev = true;
-int populationSize = 1000, generations = 1000;
-double mutationFrequency = 20, preservedPopulationPercentage = 10;
+int populationSize = 10, generations = 10;
+double mutationFrequency = 30, preservedPopulationPercentage = 10;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
     outputFolder = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/Output/";

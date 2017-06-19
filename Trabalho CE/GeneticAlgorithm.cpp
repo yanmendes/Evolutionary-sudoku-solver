@@ -20,6 +20,9 @@ void GeneticAlgorithm::clearPopulation(void){
     this->population.shrink_to_fit();
     
     this->population.resize(populationSize);
+    
+    this->averageFitness.clear();
+    this->averageFitness.shrink_to_fit();
 }
 
 vector<pair<Individual*, Individual*>> GeneticAlgorithm::selectParents(void){
@@ -190,6 +193,8 @@ bool GeneticAlgorithm::foundSolution(void){
  * e.g. Sudoku board with the dfixed values
  */
 void GeneticAlgorithm::generatePopulation(Individual * templateIndividual){
+    this->templateIndividual = templateIndividual;
+    
     for(int i = 0; i < this->population.size(); ++i)
         population.at(i) = (new Individual(templateIndividual))->fillWithRandom();
 }
