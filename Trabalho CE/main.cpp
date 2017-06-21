@@ -11,7 +11,7 @@
 #include "GeneticAlgorithm.hpp"
 
 bool dev = true;
-int populationSize = 10, generations = 10;
+int populationSize = 1000, generations = 1000;
 double mutationFrequency = 30, preservedPopulationPercentage = 10;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
@@ -86,6 +86,7 @@ int processArgs(int argc, const char * argv[]){
         ++argInd;
         if(!strcmp (argv[argInd], "all")) {
             mutationMethods.push_back(1);
+            mutationMethods.push_back(2);
         } else
             for(argInd = argInd; argInd < argc; ++argInd)
                 mutationMethods.push_back(atoi(argv[argInd]));
