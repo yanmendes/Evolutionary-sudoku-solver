@@ -65,8 +65,14 @@ vector<pair<Individual*, Individual*>> Roulette::stochasticUniversalSampling(){
     
     int size = (int) selectedIndividuals.size();
     
-    for(i = 0; i < size; ++i)
-        parents.push_back(pair<Individual*, Individual*>(selectedIndividuals.at(i), selectedIndividuals.at(size - 1 - i)));
+    std::random_shuffle(selectedIndividuals.begin(), selectedIndividuals.end());
+    
+    for(i = 0; i < size - 1; ++i)
+        if(selectedIndividuals.at(i) == selectedIndividuals.at(i + 1))
+            swap(selectedIndividuals.at(i + 1), selectedIndividuals.at(i + 2));
+    
+    for(i = 0; i < size - 1; ++i)
+        parents.push_back(pair<Individual*, Individual*>(selectedIndividuals.at(i), selectedIndividuals.at(i + 1)));
     
     return parents;
 }
