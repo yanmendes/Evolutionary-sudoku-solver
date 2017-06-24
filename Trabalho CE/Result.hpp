@@ -17,6 +17,7 @@ public:
     int generationsPassed;
     unsigned long long int matrixHash;
     long long int fittestIndividualFitness;
+    unsigned long long int fittestIndividualAmountOfRightNumbers;
     vector<double> averageFitness;
     double elapsedTime;
     string crossoverMethod, mutationMethod, fitnessMethod;
@@ -30,6 +31,7 @@ public:
         this->generationsPassed = g->getGenerationsPassed();
         this->averageFitness = g->getAverageFitness();
         this->elapsedTime = elapsedTime;
+        this->fittestIndividualAmountOfRightNumbers = g->getFittest()->numberOfWrongNumbers();
     };
 };
 

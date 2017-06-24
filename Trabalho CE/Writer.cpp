@@ -32,7 +32,7 @@ void Writer::writeResults(double elapsedTime){
     file << "Preserved population percentage: " << g->getPreservedPopulationPercentage() << "%" << endl << endl;
 
     file << "########TEST RESULTS########" << endl;
-    file << "Elapsed time: " << elapsedTime << " ms" << endl;
+    file << "Elapsed time: " << elapsedTime << "s" << endl;
     file << "Last generation average fitness: " << g->getAverageFitness().back() << endl;
     file << "Fittest individual fitness: " << g->getFittest()->getFitness() << endl;
     file << "Fittest individual amount of correct numbers: " << g->getFittest()->numberOfWrongNumbers() << endl;
@@ -48,7 +48,7 @@ void Writer::writeStatistcs(string outputFile){
     
     file.open(outputFile, fstream::out);
 
-    file << "Instance;Fitness Method;Crossover Method;Mutation Method;Max Generations;Population Size; Mutation Frequency;Preserved Population Percentage;Fittest individual fitness;First Generation Average Fitness;Last Generation Average Fitness;Generations passed;Elapsed Time\n";
+    file << "Instance;Fitness Method;Crossover Method;Mutation Method;Max Generations;Population Size; Mutation Frequency;Preserved Population Percentage;Fittest individual fitness;First Generation Average Fitness;Last Generation Average Fitness;Fittest Individual Amount of Right Numbers;Generations passed;Elapsed Time(s)\n";
     
     for(Result * r : results){
         string e = to_string(r->elapsedTime);
@@ -57,7 +57,7 @@ void Writer::writeStatistcs(string outputFile){
         file << r->matrixHash << ";" << r->fitnessMethod << ";" << r->crossoverMethod << ";" << r->mutationMethod << ";" <<
         Parameters::GENERATIONS << ";" << Parameters::POPULATION_SIZE << ";" << Parameters::MUTATION_FREQUENCY << ";" <<
         Parameters::PRESERVED_POPULATION_PERCENTAGE << ";" << r->fittestIndividualFitness << ";" << r->averageFitness.front() <<
-        ";" << r->averageFitness.back() << ";" << r->generationsPassed << ";" << e << '\n';
+        ";" << r->averageFitness.back() << ";" << r->fittestIndividualAmountOfRightNumbers << ";" << r->generationsPassed << ";" << e << '\n';
     }
     
     file.close();

@@ -1,0 +1,61 @@
+Instance;Fitness Method;Crossover Method;Mutation Method;Max Generations;Population Size; Mutation Frequency;Preserved Population Percentage;Fittest individual fitness;First Generation Average Fitness;Last Generation Average Fitness;Fittest Individual Amount of Right Numbers;Generations passed;Elapsed Time(s)
+4710;Number of wrong numbers;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;77;33.938;75.204;77;2000;340,096100
+5466;Number of wrong numbers;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;75;32.6;72.908;75;2000;340,723694
+4921;Number of wrong numbers;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;77;35.03;75.238;77;2000;340,301910
+4942;Number of wrong numbers;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;79;32.21;77.172;69;2000;338,952454
+5618;Number of wrong numbers;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;77;34.532;74.996;77;2000;338,908051
+4710;Mantere and Koljen optmization function;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;-1772;-16016.2;-2399.32;68;2000;401,821625
+5466;Mantere and Koljen optmization function;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;-2812;-17196.2;-3393.63;56;2000;400,356598
+4921;Mantere and Koljen optmization function;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;-2879;-16375;-3262.25;59;2000;400,607574
+4942;Mantere and Koljen optmization function;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;-3543;-16871.9;-4014.71;51;2000;401,050964
+5618;Mantere and Koljen optmization function;Combine solved squares;Shuffle random square|row|column;2000;500;30;20;-3626;-17286.1;-4104.01;49;2000;400,614990
+4710;Number of wrong numbers;Combine solved squares;Shuffle random positions;2000;500;30;20;77;34.172;77;77;2000;337,972931
+5466;Number of wrong numbers;Combine solved squares;Shuffle random positions;2000;500;30;20;79;32.674;79;79;2000;338,080261
+4921;Number of wrong numbers;Combine solved squares;Shuffle random positions;2000;500;30;20;76;34.888;76;76;2000;338,273407
+4942;Number of wrong numbers;Combine solved squares;Shuffle random positions;2000;500;30;20;76;31.89;76;76;2000;336,981506
+5618;Number of wrong numbers;Combine solved squares;Shuffle random positions;2000;500;30;20;77;34.682;77;77;2000;337,376770
+4710;Mantere and Koljen optmization function;Combine solved squares;Shuffle random positions;2000;500;30;20;-2803;-15960.3;-2803;54;2000;400,452362
+5466;Mantere and Koljen optmization function;Combine solved squares;Shuffle random positions;2000;500;30;20;-2416;-17197.5;-2416;63;2000;400,941315
+4921;Mantere and Koljen optmization function;Combine solved squares;Shuffle random positions;2000;500;30;20;-3991;-16127.3;-3991;50;2000;399,857666
+4942;Mantere and Koljen optmization function;Combine solved squares;Shuffle random positions;2000;500;30;20;-1723;-16854.3;-1723;62;2000;399,699127
+5618;Mantere and Koljen optmization function;Combine solved squares;Shuffle random positions;2000;500;30;20;-2501;-17393.8;-2501;57;2000;397,687134
+4710;Number of wrong numbers;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;79;27.592;76.448;70;2000;347,532776
+5466;Number of wrong numbers;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;77;23.288;74.224;77;2000;346,970123
+4921;Number of wrong numbers;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;74;27.608;71.572;74;2000;347,040497
+4942;Number of wrong numbers;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;77;23.566;74.132;72;2000;346,264069
+5618;Number of wrong numbers;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;76;25.932;73.422;76;2000;345,565582
+4710;Mantere and Koljen optmization function;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;-4201;-17365.1;-4806.14;52;2000;409,473114
+5466;Mantere and Koljen optmization function;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;-4457;-19210.1;-5046.36;51;2000;409,949890
+4921;Mantere and Koljen optmization function;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;-4740;-18247.2;-5251.29;27;2000;409,739532
+4942;Mantere and Koljen optmization function;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;-4195;-18676;-5003.91;38;2000;407,460052
+5618;Mantere and Koljen optmization function;Combine solved rows;Shuffle random square|row|column;2000;500;30;20;-4248;-18623;-5025.89;45;2000;405,043701
+4710;Number of wrong numbers;Combine solved rows;Shuffle random positions;2000;500;30;20;75;27.38;75;75;2000;343,207733
+5466;Number of wrong numbers;Combine solved rows;Shuffle random positions;2000;500;30;20;73;23.954;73;73;2000;344,246490
+4921;Number of wrong numbers;Combine solved rows;Shuffle random positions;2000;500;30;20;74;27.73;74;74;2000;343,516876
+4942;Number of wrong numbers;Combine solved rows;Shuffle random positions;2000;500;30;20;75;24.112;75;75;2000;343,208130
+5618;Number of wrong numbers;Combine solved rows;Shuffle random positions;2000;500;30;20;79;26.428;79;79;2000;342,787842
+4710;Mantere and Koljen optmization function;Combine solved rows;Shuffle random positions;2000;500;30;20;-3727;-17576.8;-3727;53;2000;406,405945
+5466;Mantere and Koljen optmization function;Combine solved rows;Shuffle random positions;2000;500;30;20;-4993;-19199.8;-4993;52;2000;406,806915
+4921;Mantere and Koljen optmization function;Combine solved rows;Shuffle random positions;2000;500;30;20;-4438;-17966.7;-4438;38;2000;406,048950
+4942;Mantere and Koljen optmization function;Combine solved rows;Shuffle random positions;2000;500;30;20;-4488;-18598.9;-4488;44;2000;656,435486
+5618;Mantere and Koljen optmization function;Combine solved rows;Shuffle random positions;2000;500;30;20;-2316;-18552;-2316;60;2000;513,540955
+4710;Number of wrong numbers;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;72;25.19;69.868;72;2000;337,584839
+5466;Number of wrong numbers;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;71;24.298;69.026;71;2000;337,874969
+4921;Number of wrong numbers;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;75;25.674;72.486;71;2000;337,733307
+4942;Number of wrong numbers;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;74;24.276;71.814;74;2000;336,922272
+5618;Number of wrong numbers;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;75;25.13;72.448;75;2000;336,371460
+4710;Mantere and Koljen optmization function;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;-4112;-17710.9;-4771.97;36;2000;400,893707
+5466;Mantere and Koljen optmization function;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;-4385;-20651.5;-4952.81;32;2000;401,597717
+4921;Mantere and Koljen optmization function;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;-4381;-20193.7;-4929.3;46;2000;402,553589
+4942;Mantere and Koljen optmization function;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;-4586;-19935;-5212.02;41;2000;401,861908
+5618;Mantere and Koljen optmization function;Combine solved columns;Shuffle random square|row|column;2000;500;30;20;-2488;-17908.9;-3115.45;69;2000;400,837738
+4710;Number of wrong numbers;Combine solved columns;Shuffle random positions;2000;500;30;20;73;24.678;73;73;2000;339,429199
+5466;Number of wrong numbers;Combine solved columns;Shuffle random positions;2000;500;30;20;73;24.304;73;73;2000;339,511932
+4921;Number of wrong numbers;Combine solved columns;Shuffle random positions;2000;500;30;20;77;25.436;77;77;2000;339,873016
+4942;Number of wrong numbers;Combine solved columns;Shuffle random positions;2000;500;30;20;75;24.418;75;75;2000;338,783447
+5618;Number of wrong numbers;Combine solved columns;Shuffle random positions;2000;500;30;20;79;25.898;79;79;2000;338,902496
+4710;Mantere and Koljen optmization function;Combine solved columns;Shuffle random positions;2000;500;30;20;-3903;-17471.6;-3903;39;2000;401,151489
+5466;Mantere and Koljen optmization function;Combine solved columns;Shuffle random positions;2000;500;30;20;-3105;-20094.4;-3105;49;2000;401,284821
+4921;Mantere and Koljen optmization function;Combine solved columns;Shuffle random positions;2000;500;30;20;-3990;-20189.9;-3990;57;2000;401,944183
+4942;Mantere and Koljen optmization function;Combine solved columns;Shuffle random positions;2000;500;30;20;-4375;-19800.2;-4375;43;2000;378,416412
+5618;Mantere and Koljen optmization function;Combine solved columns;Shuffle random positions;2000;500;30;20;-2590;-17914.9;-2590;51;2000;248,612946

@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html>
+<input type="file" id="file-input" />
+<head>
+    <title>Stacked Bar Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+    <style>
+    canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
+</head>
+
+<body>
+    <div style="width: 75%">
+        <canvas id="4710"></canvas>
+        <canvas id="4710_n"></canvas>
+        <canvas id="4921"></canvas>
+        <canvas id="4921_n"></canvas>
+        <canvas id="4942"></canvas>
+        <canvas id="4942_n"></canvas>
+        <canvas id="5466"></canvas>
+        <canvas id="5466_n"></canvas>
+        <canvas id="5618"></canvas>
+        <canvas id="5618_n"></canvas>
+    </div>
+    <script>
+      function processData(csv) {
+          var allTextLines = csv.split(/\r\n|\n/);
+          var lines = [];
+          for (var i=0; i<allTextLines.length; i++) {
+              var data = allTextLines[i].split(';');
+                  var tarr = [];
+                  for (var j=0; j<data.length; j++) {
+                      tarr.push(data[j]);
+                  }
+                  lines.push(tarr);
+          }
+        return lines;
+        }
+        function loadHandler(event) {
+            var csv = event.target.result;
+            return processData(csv);
+        }
+        function readSingleFile(e) {
+          var file = e.target.files[0];
+          if (!file) {
+            return;
+          }
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            genChart(loadHandler(e));
+          };
+          reader.readAsText(file);
+        }
+
+        function normalize(string){
+          var pieces = string.split(' ');
+
+          var res = '';
+
+          for(var k in pieces){
+            res += pieces[k][0];
+          }
+
+          return res;
+        }
+
+        function genChart(contents) {
+          var data = []; 
+          var barChartData;
+          var generations;
+          var popSize;
+          var mf;
+          var preservedPop;
+          var first, second, thir
+
+          for(var k in contents){
+            if (k == 0 || k == contents.length - 1)
+              continue;
+
+            generations = contents[k][4];
+            popSize = contents[k][5];
+            mf = contents[k][6];
+            preservedPop = contents[k][7];
+
+            if(data[contents[k][0]] == undefined || data[contents[k][0] + "_n"] == undefined){
+              data[contents[k][0]] = [];
+              data[contents[k][0] + "_n"] = [];
+            }
+
+            if(parseInt(contents[k][8]) > 0){
+              data[contents[k][0]].push({
+                fitness: contents[k][1],
+                crossover: contents[k][2],
+                mutation: contents[k][3],
+                fittest: contents[k][8],
+                firstAvg: contents[k][9],
+                lastAvg: contents[k][10],
+                rightNumbers: contents[k][11]
+              });
+
+            } else {
+              data[contents[k][0] + '_n'].push({
+                fitness: contents[k][1],
+                crossover: contents[k][2],
+                mutation: contents[k][3],
+                fittest: contents[k][8],
+                firstAvg: contents[k][9],
+                lastAvg: contents[k][10],
+                rightNumbers: contents[k][11]
+              });
+            }
+          }
+
+          var datasets = [];
+
+          for(var instance in data){
+            var labels = [];
+            var fittest = [];
+            var firstAvg = [];
+            var lastAvg = [];
+
+          for(var set in data[instance]){
+            labels.push(normalize(data[instance][set].fitness) + '-' + normalize(data[instance][set].crossover) + '-' + normalize(data[instance][set].mutation) + ": " + data[instance][set].rightNumbers);
+            fittest.push(data[instance][set].fittest);
+            firstAvg.push(data[instance][set].firstAvg);
+            lastAvg.push(data[instance][set].lastAvg);
+          }
+
+          barChartData = {
+            labels: labels,
+            datasets: [{
+                label: 'First Generation Average Fitness',
+                backgroundColor: 'rgba(114, 188, 224, 0.7)',
+                data: firstAvg
+            }, {
+                label: 'Last Generation Average Fitness',
+                backgroundColor: 'rgba(212,161,144, 1)',
+                data: lastAvg
+            }, {
+                label: 'Fittest individual',
+                backgroundColor: 'rgba(25, 145, 64, 0.5)',
+                data: fittest
+            }]
+          };
+
+          var ctx = document.getElementById(instance).getContext("2d");
+            window.myBar = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    title:{
+                        display: true,
+                        text:"Results for the instance " + instance.split('_')[0] + " with the following params: Max Generations: " + generations + " - Population Size: " + popSize + " - Mutation Frequency: " + mf + "% - Preserved Population Percentage: " + preservedPop + "%"
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            stacked: false,
+                            gridLines: {
+                                display: true,
+                                drawBorder: true,
+                                drawOnChartArea: false,
+                            },
+                        }],
+                        yAxes: [{
+                            ticks: {
+                              suggestedMin: 0,
+                              suggestedMax: 0
+                            },
+                            gridLines: {
+                                display: true,
+                                drawBorder: true,
+                                drawOnChartArea: false,
+                            },
+                            stacked: false
+                        }]
+                    }
+                }
+            });
+          }
+        } 
+
+        document.getElementById('file-input')
+          .addEventListener('change', readSingleFile, false);
+    </script>
+</body>
+
+</html>

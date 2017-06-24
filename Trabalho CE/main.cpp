@@ -10,9 +10,9 @@
 #include "Writer.hpp"
 #include "GeneticAlgorithm.hpp"
 
-bool dev = true;
-int populationSize = 1000, generations = 1000;
-double mutationFrequency = 30, preservedPopulationPercentage = 10;
+bool dev = false;
+int populationSize = 2000, generations = 500;
+double mutationFrequency = 40, preservedPopulationPercentage = 20;
 string
     inputFile = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/i.in",
     outputFolder = "/Users/yanmendes/Documents/Faculdades/Ufjf/Computação\ Evolucionista/Output/";
@@ -168,7 +168,7 @@ int main(int argc, const char * argv[]) {
                     clock_t afterSolve  = clock();
                     cout << "- - - - - - Finished solving - - - - - - " << endl << endl;
                     
-                    w->writeResults(afterSolve - beforeSolve);
+                    w->writeResults((float) (afterSolve - beforeSolve) / CLOCKS_PER_SEC);
                     
                     g->clearPopulation();
                 }
